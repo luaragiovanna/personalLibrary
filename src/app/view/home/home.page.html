@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+    Biblioteca
+     <ion-icon name="book"></ion-icon>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+<!--body-->
+<ion-content> 
+  <ion-list *ngFor="let livro of lista_livros;">
+    <ion-card style="max-width: 80%; margin-left: 9.68%;"(click)="editar(livro)">
+      <ion-card-header *ngIf="livro.downloadURL != null">
+        <img src="{{livro.downloadURL}}" style="max-width: 100%; height: auto;"/>
+      </ion-card-header>
+      <ion-card-header *ngIf="livro.downloadURL == null">
+        <img src="assets/avatarPadrao.jpg"/>
+      </ion-card-header>
+      <ion-card-title color="dark" style="margin-left: 5%;">{{livro.nome}}</ion-card-title>
+      <ion-card-subtitle style="margin-left: 5%;">{{livro.genero}}</ion-card-subtitle>
+    </ion-card>
+  </ion-list>
+  
+  <ion-fab horizontal="end" vertical="bottom" slot="fixed">
+    <ion-fab-button color="dark" (click)="irParaCadastrar()" >
+      <ion-icon name="book-outline"></ion-icon>
+
+    </ion-fab-button>
+  </ion-fab>
+  
+
+
+</ion-content>

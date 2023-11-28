@@ -1,0 +1,56 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Cadastrar livro <ion-icon name="book" style="margin-left: 5px; opacity: 0.20;"></ion-icon></ion-title>
+    <ion-buttons slot="start">
+      <!--botao de voltar-->
+      <ion-back-button color="dark" defaultHref="/"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item>
+      <ion-icon name="book-outline" style="margin-right: 5px; opacity: 0.13;"></ion-icon>
+      <ion-input label="Título:" placeholder="Insira o título do livro" [(ngModel)]="nome"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-icon name="person-outline" style="margin-right: 5px; opacity: 0.13;"></ion-icon>
+      <ion-input label="Autor:" placeholder="Insira o autor" [(ngModel)]="autor"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-icon name="business" style="margin-right: 5px; opacity: 0.13;"></ion-icon>
+      <ion-input label="Editora:" placeholder="Insira a editora" [(ngModel)]="editora"></ion-input>
+    </ion-item>
+
+
+
+    <ion-item>
+      <ion-icon name="reorder-four" style="margin-right: 5px; opacity: 0.13;"></ion-icon>
+      <ion-select label="Gênero:" interface="action-sheet" placeholder="Insira o genero" [(ngModel)]="genero">
+
+        <ion-select-option value="romance">Romance</ion-select-option>
+        <ion-select-option value="terror">Terror</ion-select-option>
+        <ion-select-option value="comedia">Comédia</ion-select-option>
+        <ion-select-option value="drama">Drama</ion-select-option>
+        <ion-select-option value="fantasia">Fantasia</ion-select-option>
+        <ion-select-option value="aventura">Aventura</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name="calendar" style="margin-right: 5px; opacity: 0.13;"></ion-icon>
+      <ion-input label="Ano de publicação:" placeholder="Insira o ano de publicacao" type="number"
+        [(ngModel)]="anoPublicacao"></ion-input>
+    </ion-item>
+    
+    <ion-button expand="block" fill="outline" color="dark">
+      <input type="file" (change)="uploadFile($event.target)" class="custom-file-input"/>
+      Inserir imagem
+    </ion-button>
+
+    <ion-button expand="block" color="dark" (click)="cadastrar()">Cadastrar</ion-button>
+  </ion-list>
+
+
+</ion-content>

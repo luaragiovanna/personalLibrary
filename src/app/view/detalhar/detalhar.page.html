@@ -1,0 +1,54 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <!--botao de voltar-->
+      <ion-back-button color="dark" defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>detalhar <ion-icon name="create-outline"></ion-icon></ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content [fullscreen]="true">
+  <ion-list>
+    <ion-item>
+      <ion-toggle (ionChange)="habilitar()" color="dark"> Habilitar edição </ion-toggle>
+    </ion-item>
+    <ion-item>
+      <ion-card style="max-width: 80%; margin-left: 9.68%;">
+        <img src="{{livro.downloadURL}}" style="max-width: 100%"/>
+      </ion-card>
+    </ion-item>
+    <ion-item> <!-- ngModel => linka com as variaveis criadas na ts-->
+      <ion-icon name="book-outline" style="margin-right: 5px; opacity: 0.13;"></ion-icon>
+      <ion-input label="Título:" [(ngModel)]="nome" disabled="{{edicao}}"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-icon name="calendar" style="margin-right: 5px; opacity: 0.13;"></ion-icon>
+      <ion-input label="Ano de publicacao:" type="number" [(ngModel)]="anoPublicacao" disabled="{{edicao}}"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-icon name="person-outline" style="margin-right: 5px; opacity: 0.13;"></ion-icon>
+      <ion-input label="Autor:" type="string" [(ngModel)]="autor" disabled="{{edicao}}"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-icon name="business" style="margin-right: 5px; opacity: 0.13;"></ion-icon>
+      <ion-input label="Editora:" type="string" [(ngModel)]="editora" disabled="{{edicao}}"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-icon name="reorder-four" style="margin-right: 5px; opacity: 0.13;"></ion-icon>
+      <ion-select label="Gênero:" interface="action-sheet" placeholder="Insira o genero" [(ngModel)]="genero" disabled="{{edicao}}">
+        <ion-select-option value="romance">Romance</ion-select-option>
+        <ion-select-option value="terror">Terror</ion-select-option>
+        <ion-select-option value="comedia">Comédia</ion-select-option>
+        <ion-select-option value="drama">Drama</ion-select-option>
+        <ion-select-option value="fantasia">Fantasia</ion-select-option>
+        <ion-select-option value="aventura">Aventura</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-button disabled="{{edicao}}" expand="block" fill="outline" color="dark">
+      <input type="file" (change)="uploadFile($event.target)" class="custom-file-input" />
+      Alterar imagem
+    </ion-button>
+    <ion-button expand="block" (click)="editar()"  disabled="{{edicao}}" color="dark"> Salvar</ion-button>
+    <ion-button expand="block" (click)="excluir()" fill="solid" color="danger" disabled="{{edicao}}">Excluir</ion-button>
+  </ion-list>
+</ion-content>
