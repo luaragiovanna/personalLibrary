@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import Livro from 'src/app/model/entities/Livro';
 import { AlertController } from '@ionic/angular';
 import { FirebaseService } from 'src/app/model/services/firebase.service';
+import { AlertService } from 'src/app/common/alert.service';
 
 @Component({
   selector: 'app-detalhar',
@@ -22,7 +23,10 @@ export class DetalharPage implements OnInit {
   public imagem : any;
 
 
-  constructor(private alertController: AlertController, private router: Router, private firebase: FirebaseService) { }
+  constructor(private alertController: AlertController, 
+    private router: Router, 
+    private firebase: FirebaseService,
+    private alertService: AlertService) { }
 
   //possibilita carregar todos os dados na tela no q o usuario é redirecionado para essa tela 
   ngOnInit() {
@@ -76,8 +80,9 @@ export class DetalharPage implements OnInit {
     this.presentConfirmAlert("Biblioteca Pessoal", "Atenção", "Você deseja realmente excluir esse livro?")
   }
 
-  excluirContato(){
+  excluirContato(){ //mudar para excluirLivro
     this.firebase.delete(this.livro);
+    this.alertService.dismissLoader();
     this.router.navigate(['/home']);
   }
 
@@ -95,6 +100,7 @@ export class DetalharPage implements OnInit {
           role: 'confirmar',
           handler:(acao) =>{
             this.excluirContato();
+            this.alertService.dismissLoader();
           }
           }
         ],

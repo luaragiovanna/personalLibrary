@@ -1,0 +1,42 @@
+
+
+<ion-content>
+  <img src="assets/eBook.gif"/>
+
+  <ion-card>
+    <!-- submitForm => substitui o (click), formulario "clica"/valida direto -->
+    <form [formGroup]="formLogar" (ngSubmit)="submitForm()">
+      <ion-item>
+        <ion-label position="floating" class="emailColor">Email</ion-label>
+        <ion-input type="email" formControlName="email"></ion-input> <!-- formControlName => no lugar de ngModel -->
+      </ion-item>
+      <!--Mensagem de Erro Email-->
+      <!-- touched => verifica no q sai do input-->
+      <span *ngIf="formLogar.get('email')?.touched &&
+      formLogar.get('email')?.errors?.['required']">Email é obrigatório</span><br/>
+      <!-- dirty => verifica no q vai digitando -->
+      <span *ngIf="formLogar.get('email')?.dirty &&
+      formLogar.get('email')?.errors?.['email']">Formato de email inválido</span>
+
+      <ion-item>
+        <ion-label position="floating" class="emailColor">Senha</ion-label>
+        <ion-input type="password" formControlName="senha"></ion-input> <!-- formControlName => no lugar de ngModel -->
+      </ion-item>
+      <!--Mensagem de Erro Senha-->
+      <span *ngIf="formLogar.get('senha')?.touched &&
+      formLogar.get('senha')?.errors?.['required']">Senha é obrigatória</span><br/>
+      <span *ngIf="formLogar.get('senha')?.dirty &&
+      formLogar.get('senha')?.errors?.['minlength']">Senha precisa ter no mínimo 6 dígitos</span>
+      <ion-button expand="block" class="entrarColor" type="submit">Entrar</ion-button> <!-- Deve haver somente 1 submit type -->
+      <ion-button expand="block" color="light" (click)="logarComGoogle()">
+        Entrar com Google
+        <ion-icon slot="end" name="logo-google"></ion-icon>
+      </ion-button>
+      <ion-button expand="block" color="light" (click)="logarComFacebook()">
+        Entrar com Facebook
+        <ion-icon slot="end" name="logo-facebook"></ion-icon>
+      </ion-button>
+      <a (click)="irParaSignUp()">Não tem cadastro? Clique aqui!</a>
+    </form>
+  </ion-card>
+</ion-content>

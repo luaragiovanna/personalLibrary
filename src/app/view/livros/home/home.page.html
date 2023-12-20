@@ -22,10 +22,17 @@
   </ion-list>
   
   <ion-fab horizontal="end" vertical="bottom" slot="fixed">
-    <ion-fab-button color="dark" (click)="irParaCadastrar()" >
+    <ion-fab-button color="dark">
       <ion-icon name="book-outline"></ion-icon>
-
     </ion-fab-button>
+    <ion-fab-list side="top">
+      <ion-fab-button color="light">
+        <ion-icon name="add-outline" (click)="irParaCadastrar()" ></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button (click)="logout()">
+        <ion-icon name="exit-outline" ></ion-icon>
+      </ion-fab-button>
+    </ion-fab-list>
   </ion-fab>
   
 

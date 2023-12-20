@@ -12,27 +12,30 @@ export class FirebaseService {
 
   constructor(private firestore : AngularFirestore, private storage : AngularFireStorage) { }
 
-  read(){
-    return this.firestore.collection(this.PATH).snapshotChanges();
+  read(uid : string){
+    return this.firestore.collection(this.PATH,
+      ref => ref.where('uid', '==', uid))// ref => referencia // where => select no banco, buscando o uid
+      // poderia ter mais um ref com o nome de alguem no lugar do segundo uid => para buscas especificas
+    .snapshotChanges();
   }
 
   create(livro: Livro){
     return this.firestore.collection(this.PATH)
     .add({nome: livro.nome,autor: livro.autor, editora: livro.editora,
-    genero: livro.genero, anoPublicacao: livro.anoPublicacao});
+    genero: livro.genero, anoPublicacao: livro.anoPublicacao, uid: livro.uid});
 
   }
 
   createWithAvatar(livro: Livro){
     return this.firestore.collection(this.PATH)
     .add({nome: livro.nome,autor: livro.autor, editora: livro.editora,
-      genero: livro.genero, anoPublicacao: livro.anoPublicacao, downloadURL : livro.downloadURL});
+      genero: livro.genero, anoPublicacao: livro.anoPublicacao, downloadURL : livro.downloadURL, uid: livro.uid});
   }
 
   updateWithAvatar(livro: Livro, id: string){
     return this.firestore.collection(this.PATH).doc(id)
     .update({nome: livro.nome,autor: livro.autor, editora: livro.editora,
-      genero: livro.genero, anoPublicacao: livro.anoPublicacao, downloadURL : livro.downloadURL});
+      genero: livro.genero, anoPublicacao: livro.anoPublicacao, downloadURL : livro.downloadURL, uid: livro.uid});
   }
 
   uploadImage(imagem: any, livro: Livro){
@@ -64,7 +67,7 @@ export class FirebaseService {
   update(livro: Livro,id: string){
     return this.firestore.collection(this.PATH).doc(id)
     .update({nome: livro.nome, autor: livro.autor, editora: livro.editora,
-    genero: livro.genero, anoPublicacao: livro.anoPublicacao});
+    genero: livro.genero, anoPublicacao: livro.anoPublicacao, uid: livro.uid});
   }
 
   delete(livro: Livro){

@@ -6,6 +6,7 @@ export default class Livro{
     private _editora: string;
     private _anoPublicacao: number;
     private _downloadURL: any;
+    private _uid: string;
 
     constructor(nome: string, autor: string, genero: string, editora: string, anoPublicacao: number){
         this._nome = nome;
@@ -60,5 +61,11 @@ export default class Livro{
     }
     public set downloadURL(value: any) {
         this._downloadURL = value;
+    }
+    public get uid(): string {
+        return this._uid;
+    }
+    public set uid(value: string) {
+        this._uid = value;
     }
 }
