@@ -17,24 +17,29 @@
         <img src="{{livro.downloadURL}}" style="max-width: 100%"/>
       </ion-card>
     </ion-item>
-    <ion-item> <!-- ngModel => linka com as variaveis criadas na ts-->
-      <ion-icon name="book-outline" style="margin-right: 5px; opacity: 0.13;"></ion-icon>
-      <ion-input label="Título:" [(ngModel)]="nome" disabled="{{edicao}}"></ion-input>
+    <ion-item class="ion-align-items-center"> <!-- ngModel => linka com as variaveis criadas na ts-->
+      <ion-icon name="book-outline" style="margin-right: 5px; opacity: 0.47;"></ion-icon>
+      <ion-label class="ion-padding-end">Título:</ion-label>
+      <ion-input [(ngModel)]="nome" disabled="{{edicao}}"></ion-input>
+    </ion-item>
+    <ion-item class="ion-align-items-center">
+      <ion-icon name="calendar" style="margin-right: 5px; opacity: 0.47;"></ion-icon>
+      <ion-label class="ion-padding-end inline ion-text-wrap">Ano de publicacao:</ion-label>
+      <ion-input type="number" [(ngModel)]="anoPublicacao" disabled="{{edicao}}"></ion-input>
+    </ion-item>
+    
+    <ion-item class="ion-align-items-center">
+      <ion-icon name="person-outline" style="margin-right: 5px; opacity: 0.47;"></ion-icon>
+      <ion-label class="ion-padding-end">Autor:</ion-label>
+      <ion-input [(ngModel)]="autor" disabled="{{edicao}}"></ion-input>
+    </ion-item>
+    <ion-item class="ion-align-items-center">
+      <ion-icon name="business" style="margin-right: 5px; opacity: 0.47;"></ion-icon>
+      <ion-label class="ion-padding-end">Editora:</ion-label>
+      <ion-input type="string" [(ngModel)]="editora" disabled="{{edicao}}"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-icon name="calendar" style="margin-right: 5px; opacity: 0.13;"></ion-icon>
-      <ion-input label="Ano de publicacao:" type="number" [(ngModel)]="anoPublicacao" disabled="{{edicao}}"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-icon name="person-outline" style="margin-right: 5px; opacity: 0.13;"></ion-icon>
-      <ion-input label="Autor:" type="string" [(ngModel)]="autor" disabled="{{edicao}}"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-icon name="business" style="margin-right: 5px; opacity: 0.13;"></ion-icon>
-      <ion-input label="Editora:" type="string" [(ngModel)]="editora" disabled="{{edicao}}"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-icon name="reorder-four" style="margin-right: 5px; opacity: 0.13;"></ion-icon>
+      <ion-icon name="reorder-four" style="margin-right: 5px; opacity: 0.47;"></ion-icon>
       <ion-select label="Gênero:" interface="action-sheet" placeholder="Insira o genero" [(ngModel)]="genero" disabled="{{edicao}}">
         <ion-select-option value="romance">Romance</ion-select-option>
         <ion-select-option value="terror">Terror</ion-select-option>

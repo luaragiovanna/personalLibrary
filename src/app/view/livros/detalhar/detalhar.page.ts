@@ -4,6 +4,7 @@ import Livro from 'src/app/model/entities/Livro';
 import { AlertController } from '@ionic/angular';
 import { FirebaseService } from 'src/app/model/services/firebase.service';
 import { AlertService } from 'src/app/common/alert.service';
+import { AuthService } from 'src/app/model/services/auth.service';
 
 @Component({
   selector: 'app-detalhar',
@@ -21,12 +22,16 @@ export class DetalharPage implements OnInit {
   anoPublicacao: number;
   edicao: boolean = true;
   public imagem : any;
+  public user: any;
 
 
   constructor(private alertController: AlertController, 
     private router: Router, 
     private firebase: FirebaseService,
-    private alertService: AlertService) { }
+    private alertService: AlertService,
+    private auth: AuthService) {
+      this.user = this.auth.getUserLogged();
+    }
 
   //possibilita carregar todos os dados na tela no q o usuario é redirecionado para essa tela 
   ngOnInit() {
@@ -47,17 +52,22 @@ export class DetalharPage implements OnInit {
     }
   }
 
-  editar(){
+  async editar(){
     if(this.nome && this.autor && this.editora && this.anoPublicacao && this.genero){
+      //await this.alertService.simpleLoader();
       let novo: Livro = new Livro(this.nome, this.autor, this.genero, this.editora, this.anoPublicacao);
       novo.id = this.livro.id;
+      novo.uid = this.user.uid;
       if(this.imagem){
         this.firebase.uploadImage(this.imagem,novo);
+        await this.alertService.dismissLoader();
       }else{
         this.firebase.update(novo, this.livro.id); //poderia ser novo.id tambem
       }
+      await this.alertService.dismissLoader();
       this.router.navigate(["/home"]);
     }else{
+      await this.alertService.dismissLoader();
       this.presentAlert('ERRO', 'Campos Obrigatórios');
     }
   }

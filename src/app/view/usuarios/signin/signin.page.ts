@@ -81,6 +81,17 @@ export class SigninPage implements OnInit {
     })
   }
 
+  logarComGithub() : void{
+    this.authService.signInWithGithub().then((res)=>{
+      this.alertService.presentAlert("Olá", "Seja bem vindo!")
+      this.router.navigate(["home"]);
+    })
+    .catch((error)=>{
+      this.alertService.presentAlert("Erro", "Erro ao Logar")
+      console.log(error.message)
+    })
+  }
+
   irParaSignUp(){
     this.router.navigate(["signup"]);
   }
