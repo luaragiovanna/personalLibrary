@@ -1,0 +1,16 @@
+<ion-item>
+  <ion-card color="light" style="max-width: 80%; margin-left: 9.68%;"(click)="editar(book)">
+    <ion-card-header *ngIf="book.downloadURL != null">
+      <img src="{{book.downloadURL}}" style="max-width: 100%; height: auto;"/>
+    </ion-card-header>
+    <ion-card-header *ngIf="book.downloadURL == null">
+      <img src="assets/avatarPadrao.jpg"/>
+    </ion-card-header>
+    <ion-card-title>
+      <ion-label class="emailColor" style="margin-left: 5%;">{{book.nome}}</ion-label>
+    </ion-card-title>
+    <ion-card-subtitle>
+      <ion-label class="entrarColor" style="margin-left: 5%;">{{book.genero}}</ion-label>
+    </ion-card-subtitle>
+  </ion-card>
+</ion-item>

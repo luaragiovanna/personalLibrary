@@ -9,48 +9,73 @@
 </ion-header>
 
 <ion-content>
-  <ion-list>
-    <ion-item>
-      <ion-icon name="book-outline" style="margin-right: 5px; opacity: 0.13;"></ion-icon>
-      <ion-input label="Título:" placeholder="Insira o título do livro" [(ngModel)]="nome"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-icon name="person-outline" style="margin-right: 5px; opacity: 0.13;"></ion-icon>
-      <ion-input label="Autor:" placeholder="Insira o autor" [(ngModel)]="autor"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-icon name="business" style="margin-right: 5px; opacity: 0.13;"></ion-icon>
-      <ion-input label="Editora:" placeholder="Insira a editora" [(ngModel)]="editora"></ion-input>
-    </ion-item>
+  <form [formGroup]="formLivro" (ngSubmit)="submitForm()">
+    <ion-list>
+      <ion-item class="ion-align-items-center"> <!-- ngModel => linka com as variaveis criadas na ts-->
+        <ion-icon name="book-outline" style="margin-right: 5px; opacity: 0.47;"></ion-icon>
+        <ion-label class="ion-padding-end">Título:</ion-label>
+        <ion-input type="string" formControlName="nome"></ion-input>
+      </ion-item>
+      <!--Mensagem de Erro Titulo-->
+      <!-- touched => verifica no q sai do input-->
+      <span style="width: 10%; margin-left: 4%;" *ngIf="formLivro.get('nome')?.touched &&
+      formLivro.get('nome')?.errors?.['required']">Título é obrigatório</span><br/>
 
+      <ion-item class="ion-align-items-center">
+        <ion-icon name="person-outline" style="margin-right: 5px; opacity: 0.47;"></ion-icon>
+        <ion-label class="ion-padding-end">Autor:</ion-label>
+        <ion-input type="string" formControlName="autor"></ion-input>
+      </ion-item>
+      <!--Mensagem de Erro Autor-->
+      <!-- touched => verifica no q sai do input-->
+      <span style="width: 10%; margin-left: 4%;" *ngIf="formLivro.get('autor')?.touched &&
+      formLivro.get('autor')?.errors?.['required']">Autor é obrigatório</span><br/>
 
-
-    <ion-item>
-      <ion-icon name="reorder-four" style="margin-right: 5px; opacity: 0.13;"></ion-icon>
-      <ion-select label="Gênero:" interface="action-sheet" placeholder="Insira o genero" [(ngModel)]="genero">
-
-        <ion-select-option value="romance">Romance</ion-select-option>
-        <ion-select-option value="terror">Terror</ion-select-option>
-        <ion-select-option value="comedia">Comédia</ion-select-option>
-        <ion-select-option value="drama">Drama</ion-select-option>
-        <ion-select-option value="fantasia">Fantasia</ion-select-option>
-        <ion-select-option value="aventura">Aventura</ion-select-option>
-      </ion-select>
-    </ion-item>
-
-    <ion-item>
-      <ion-icon name="calendar" style="margin-right: 5px; opacity: 0.13;"></ion-icon>
-      <ion-input label="Ano de publicação:" placeholder="Insira o ano de publicacao" type="number"
-        [(ngModel)]="anoPublicacao"></ion-input>
-    </ion-item>
-    
-    <ion-button expand="block" fill="outline" color="dark">
-      <input type="file" (change)="uploadFile($event.target)" class="custom-file-input"/>
-      Inserir imagem
-    </ion-button>
-
-    <ion-button expand="block" color="dark" (click)="cadastrar()">Cadastrar</ion-button>
-  </ion-list>
-
-
+      <ion-item class="ion-align-items-center">
+        <ion-icon name="business" style="margin-right: 5px; opacity: 0.47;"></ion-icon>
+        <ion-label class="ion-padding-end">Editora:</ion-label>
+        <ion-input type="string" formControlName="editora"></ion-input>
+      </ion-item>
+      <!--Mensagem de Erro Editora-->
+      <!-- touched => verifica no q sai do input-->
+      <span style="width: 10%; margin-left: 4%;" *ngIf="formLivro.get('editora')?.touched &&
+      formLivro.get('editora')?.errors?.['required']">Editora é obrigatório</span><br/>
+  
+      <ion-item>
+        <ion-icon name="reorder-four" style="margin-right: 5px; opacity: 0.47;"></ion-icon>
+        <ion-select label="Gênero:" interface="action-sheet" placeholder="Insira o genero" formControlName="genero">
+  
+          <ion-select-option value="romance">Romance</ion-select-option>
+          <ion-select-option value="terror">Terror</ion-select-option>
+          <ion-select-option value="comedia">Comédia</ion-select-option>
+          <ion-select-option value="drama">Drama</ion-select-option>
+          <ion-select-option value="fantasia">Fantasia</ion-select-option>
+          <ion-select-option value="aventura">Aventura</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <!--Mensagem de Erro Genero-->
+      <!-- touched => verifica no q sai do input-->
+      <span style="width: 10%; margin-left: 4%;" *ngIf="formLivro.get('genero')?.touched &&
+      formLivro.get('genero')?.errors?.['required']">Gênero é obrigatório</span><br/>
+  
+      <ion-item class="ion-align-items-center">
+        <ion-icon name="calendar" style="margin-right: 5px; opacity: 0.47;"></ion-icon>      
+        <ion-label class="ion-padding-end inline ion-text-wrap">Ano de publicacao:</ion-label>
+        <ion-input type="number" formControlName="anoPublicacao" minlength="4"></ion-input>
+      </ion-item>
+      <!--Mensagem de Erro Ano de publicacao-->
+      <!-- touched => verifica no q sai do input-->
+      <span style="width: 10%; margin-left: 4%;" *ngIf="formLivro.get('anoPublicacao')?.touched &&
+      formLivro.get('anoPublicacao')?.errors?.['required']">Ano de Publicacao é obrigatório</span><br/>
+      <!-- <span *ngIf="formLivro.get('anoPublicacao')?.dirty && formLivro.get('anoPublicacao')?.errors?.['pattern']">Ano de Publicação deve ser numérico</span><br>
+      <span *ngIf="formLivro.get('anoPublicacao')?.dirty && formLivro.get('anoPublicacao')?.errors?.['min']">Ano de Publicação deve ser positivo</span><br> -->
+      
+      <ion-button expand="block" fill="outline" color="dark">
+        <input type="file" (change)="uploadFile($event.target)" class="custom-file-input"/>
+        Inserir imagem
+      </ion-button>
+  
+      <ion-button expand="block" color="dark" (click)="cadastrar()">Cadastrar</ion-button>
+    </ion-list>
+  </form>
 </ion-content>
