@@ -28,6 +28,7 @@
   
   ion-label{
     color: red;
+  
   }
 
   .custom-file-input {
@@ -44,3 +45,11 @@
     border: 5px;
     border-color: darkblue;
   }
+
+  ion-content {
+    --ion-background-color: tertiary;
+}
+
+span{
+  color: primary;
+}

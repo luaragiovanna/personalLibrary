@@ -1,12 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AlertController } from '@ionic/angular';
-import { LivroService } from 'src/app/model/services/livro.service';
-import { FirebaseService } from 'src/app/model/services/firebase.service';
+import { AlertService } from 'src/app/common/alert.service';
 import Livro from 'src/app/model/entities/Livro';
 import { AuthService } from 'src/app/model/services/auth.service';
-import { AlertService } from 'src/app/common/alert.service';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FirebaseService } from 'src/app/model/services/firebase.service';
 
 @Component({
   selector: 'app-cadastrar',
@@ -101,7 +99,7 @@ export class CadastrarPage implements OnInit {
       const {nome, autor, editora, anoPublicacao, genero} = this.formLivro.value;
       if (nome && autor && editora && anoPublicacao && genero) {
         //await this.alertService.simpleLoader();
-        let novo: Livro = new Livro(nome, autor, editora, anoPublicacao, genero);
+        let novo: Livro = new Livro(nome, autor, genero, editora, anoPublicacao);
         novo.uid = this.user.uid;
         if (this.imagem) {
           await this.firebase.uploadImage(this.imagem, novo);

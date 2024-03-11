@@ -10,10 +10,11 @@ export default class Livro{
 
     constructor(nome: string, autor: string, genero: string, editora: string, anoPublicacao: number){
         this._nome = nome;
+        this._autor = autor;
         this._genero = genero;
         this._editora = editora;
         this._anoPublicacao = anoPublicacao;
-        this._autor = autor;
+       
     }
 
     public get nome(): string {
