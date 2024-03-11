@@ -2,20 +2,25 @@ ion-content {
     --ion-background-color: #e3e3d3;
 }
 
-.emailColor{
+.emailColor {
     color: #808660;
 }
 
-.entrarColor{
+.entrarColor {
     --background: #99a76a;
     --background-activated: #99a76a;
 }
 
-span{
+span {
     color: red;
     margin-left: 4.5%;
 }
 
-a{
+a {
     margin-left: 22.5%;
+}
+
+
+ion-card .card-content {
+    --ion-background-color: white;
 }

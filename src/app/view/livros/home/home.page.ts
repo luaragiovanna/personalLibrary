@@ -1,10 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-//import { AlertController } from '@ionic/angular';
+import { IonSearchbar } from '@ionic/angular';
 import Livro from 'src/app/model/entities/Livro';
-import { LivroService } from 'src/app/model/services/livro.service';
-import { FirebaseService } from 'src/app/model/services/firebase.service';
 import { AuthService } from 'src/app/model/services/auth.service';
+import { FirebaseService } from 'src/app/model/services/firebase.service';
 
 @Component({
   selector: 'app-home',
@@ -12,98 +11,102 @@ import { AuthService } from 'src/app/model/services/auth.service';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
-  public nome: string;
-  public autor: string;
-  public genero: string;
-  public editora: string;
-  public anoPublicacao: number;
+  @ViewChild('mySearchbar') searchbar: IonSearchbar;
+  lista_livros: Livro[] = [];
   public user: any; 
-  public lista_livros : Livro[] = [];
-  books : any[] = [];
   isLoading: boolean = false;
+  hasSearched: boolean = false;
+  query: any;
   model: any = {
     icon: 'ban-outline',
     title: 'Nenhum livro encontrado'
   };
-  query: any;
-  hasSearched: boolean = false;
-  
 
-  constructor(private firebase : FirebaseService, private router : Router, private auth : AuthService){
+  constructor(private firebase: FirebaseService, private router: Router, private auth: AuthService) {
     this.isLoading = true;
     this.hasSearched = false;
-    this.user = this.auth.getUserLogged()
-      console.log(this.auth.getUserLogged())
-    this.firebase.read(this.user.uid).subscribe(res => { //pega os dados do firebase e armazena no id do livro da home
-      this.lista_livros = res.map(livro =>{
-        return{
-          id: livro.payload.doc.id,//anexa esse conteúdo a um id
-          ... livro.payload.doc.data() as any //tudo q a gente insere -> data, telefone
-        }as Livro
-      })
-    })
+    this.user = this.auth.getUserLogged();
+
+    this.firebase.read(this.user.uid).subscribe(res => {
+      this.lista_livros = res.map(livro => ({
+        id: livro.payload.doc.id,
+        ...livro.payload.doc.data() as any
+      } as Livro));
+      this.isLoading = false;
+    });
   }
 
-  irParaCadastrar(){
+  irParaCadastrar() {
     this.router.navigate(['/cadastrar']);
   }
 
-  /*editar(livro: Livro){
-    this.router.navigateByUrl("/detalhar", {state : {livro:livro}});//passa o objeto inteiro, n mais só o parametro
-    //console.log(index);
-  }*/
+  // Método para lidar com a edição do livro
+  editarLivro(livro: Livro) {
+    this.router.navigateByUrl("/detalhar", { state: { livro: livro } });
+  }
 
-  logout(){
-    this.auth.signOut().then((res)=>{
+  logout() {
+    this.auth.signOut().then((res) => {
       this.router.navigate(["signin"]);
     })
   }
 
   ngOnInit() {
     this.isLoading = true;
-    setTimeout(()=>{
-      //colocar lista de livros
+    setTimeout(() => {
+      // Colocar lista de livros
       this.lista_livros;
-      
       this.isLoading = false;
-    },3000); //da um delay de 3 milisegundos
-    
+    }, 3000); // Da um delay de 3 milissegundos
   }
 
-  filtrarlivros(query: any) {
+  // Método para filtrar livros
+  filtrarlivros(event: any) {
+    this.isLoading = true;
+    const query = event.detail.value;
+  
     if (query) {
-      this.lista_livros = this.lista_livros.filter(livro =>
-        livro.nome.toLowerCase().includes(query)
-      );
+      console.log('Query:', query);
+      this.firebase.read(this.user.uid).subscribe(res => {
+        this.lista_livros = res.map(livro => ({
+          id: livro.payload.doc.id,
+          ...livro.payload.doc.data() as any
+        } as Livro)).filter(livro =>
+          livro.nome.toLowerCase().includes(query.toLowerCase())
+        );
+        console.log('Livros filtrados:', this.lista_livros);
+        this.isLoading = false;
+      });
     } else {
-      // Se o campo de busca estiver vazio, exibir todas as músicas novamente
-      this.firebase.read(this.user.uid)
-        .subscribe(res => {
-          this.lista_livros = res.map(livro => ({
-            id: livro.payload.doc.id,
-            ...livro.payload.doc.data() as any
-          } as Livro));
-        });
+      // Se o campo de busca estiver vazio, recarrega todos os livros
+      this.firebase.read(this.user.uid).subscribe(res => {
+        this.lista_livros = res.map(livro => ({
+          id: livro.payload.doc.id,
+          ...livro.payload.doc.data() as any
+        } as Livro));
+        console.log('Livros filtrados (sem busca):', this.lista_livros);
+        this.isLoading = false;
+      });
+    }
+  }
+  
+  
+  
+  // Método chamado quando a busca é alterada
+  onSearchChange(event: any) {
+    this.hasSearched = true;
+    this.query = event.detail.value.toLowerCase();
+    if (this.query.length > 0) {
+      this.isLoading = true;
+      setTimeout(() => {
+        this.isLoading = false;
+      }, 3000);
     }
   }
 
-  // async onSearchChange(event: any){
-  //   this.hasSearched = true;
-  //   this.query = (event.target as HTMLInputElement).value;
-  //   this.books = [];
-  //   if(this.query.length > 0){
-  //     this.isLoading = true;
-  //     setTimeout(async()=>{
-  //       this.books = await this.lista_livros.filter((element: any) => {
-  //         return element.nome.includes(this.query);
-  //       })
-  //       console.log(this.books);
-  //       this.isLoading = false;
-  //     }, 3000);
-  //   }
-  // }
-
-  // returnSearch(){
-  //   this.hasSearched = false;
-  // }
+  // Método chamado quando o usuário deseja voltar da busca
+  returnSearch() {
+    this.hasSearched = false;
+    this.searchbar.value = null;
+  }
 }

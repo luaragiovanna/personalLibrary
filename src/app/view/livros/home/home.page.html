@@ -1,54 +1,34 @@
 <ion-header>
   <ion-toolbar>
+    <ion-icon name="arrow-back-outline" *ngIf="hasSearched" (click)="returnSearch()"></ion-icon>
     <ion-title>
-    Biblioteca
-     <ion-icon name="book"></ion-icon>
+      Biblioteca
+      <ion-icon name="book"></ion-icon>
     </ion-title>
     <ion-toolbar>
       <app-searchbar (ionChange)="filtrarlivros($event)"></app-searchbar>
     </ion-toolbar>
   </ion-toolbar>
 </ion-header>
-<!--body-->
-<ion-content> 
-  <app-loading-book *ngIf="isLoading"></app-loading-book> <!-- || query?.length == 0) -->
-  <app-empty-screen *ngIf="!isLoading && (lista_livros?.length == 0)" [model]="model"></app-empty-screen>
 
-  <ion-list lines="none"> <!--*ngIf="lista_livros?.length > 0"-->
-    <app-book *ngFor="let book of lista_livros" [book]="book"></app-book>
+<ion-content>
+  <app-loading-book *ngIf="isLoading"></app-loading-book>
+  <app-empty-screen *ngIf="!isLoading && lista_livros.length === 0" [model]="model"></app-empty-screen>
+
+  <ion-list lines="none">
+    <app-book *ngFor="let book of lista_livros" (click)="editarLivro(book)" [book]="book"></app-book>
   </ion-list>
-    <ion-list-header>
-      <ion-label>
-        <h4>Resultados de busca por {{query}}</h4>
-      </ion-label>
-    </ion-list-header>
-  <!--<ion-list *ngFor="let livro of lista_livros;">
-    <ion-card color="light" style="max-width: 80%; margin-left: 9.68%;"(click)="editar(livro)">
-      <ion-card-header *ngIf="livro.downloadURL != null">
-        <img src="{{livro.downloadURL}}" style="max-width: 100%; height: auto;"/>
-      </ion-card-header>
-      <ion-card-header *ngIf="livro.downloadURL == null">
-        <img src="assets/avatarPadrao.jpg"/>
-      </ion-card-header>
-      <ion-card-title>
-        <ion-label class="emailColor" style="margin-left: 5%;">{{livro.nome}}</ion-label>
-      </ion-card-title>
-      <ion-card-subtitle>
-        <ion-label class="entrarColor" style="margin-left: 5%;">{{livro.genero}}</ion-label>
-      </ion-card-subtitle>
-    </ion-card>
-  </ion-list>-->
-  
+
   <ion-fab horizontal="end" vertical="bottom" slot="fixed">
     <ion-fab-button color="dark">
       <ion-icon name="book-outline"></ion-icon>
     </ion-fab-button>
     <ion-fab-list side="top">
-      <ion-fab-button color="light">
-        <ion-icon name="add-outline" (click)="irParaCadastrar()" ></ion-icon>
+      <ion-fab-button color="light" (click)="irParaCadastrar()">
+        <ion-icon name="add-outline"></ion-icon>
       </ion-fab-button>
       <ion-fab-button (click)="logout()">
-        <ion-icon name="exit-outline" ></ion-icon>
+        <ion-icon name="exit-outline"></ion-icon>
       </ion-fab-button>
     </ion-fab-list>
   </ion-fab>

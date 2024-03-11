@@ -3,9 +3,9 @@
 <ion-content>
   <img src="assets/eBook.gif"/>
 
-  <ion-card>
+  <ion-card class="card-content">
     <!-- submitForm => substitui o (click), formulario "clica"/valida direto -->
-    <form [formGroup]="formLogar" (ngSubmit)="submitForm()">
+    <form  [formGroup]="formLogar" (ngSubmit)="submitForm()">
       <ion-item>
         <ion-label position="floating" class="emailColor">Email</ion-label>
         <ion-input type="email" formControlName="email"></ion-input> <!-- formControlName => no lugar de ngModel -->
@@ -37,7 +37,7 @@
         <ion-icon slot="end" name="logo-github"></ion-icon>
       </ion-button>
       <br/>
-      <a (click)="irParaSignUp()">Não tem cadastro? Clique aqui!</a>
+      <a class="emailColor" (click)="irParaSignUp()">Não tem cadastro? Clique aqui!</a>
     </form>
     <br/>
   </ion-card>
