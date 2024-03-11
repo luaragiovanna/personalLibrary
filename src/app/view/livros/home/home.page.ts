@@ -60,7 +60,7 @@ export class HomePage {
     }, 3000); // Da um delay de 3 milissegundos
   }
 
-  // Método para filtrar livros
+  // filtrar livros
   filtrarlivros(event: any) {
     this.isLoading = true;
     const query = event.detail.value;
@@ -78,7 +78,7 @@ export class HomePage {
         this.isLoading = false;
       });
     } else {
-      // Se o campo de busca estiver vazio, recarrega todos os livros
+      // se campo de busca estiver vazio recarrega todos os livros
       this.firebase.read(this.user.uid).subscribe(res => {
         this.lista_livros = res.map(livro => ({
           id: livro.payload.doc.id,
