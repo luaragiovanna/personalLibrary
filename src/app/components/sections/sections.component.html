@@ -1,0 +1,66 @@
+
+<form  [formGroup]="formLivro" (ngSubmit)="onSubmit()"> 
+  <ion-list>
+    
+    <ion-item  color="tertiary" class="ion-align-items-center"> <!-- ngModel => linka com as variaveis criadas na ts-->
+      <ion-icon name="book-outline" style="margin-right: 5px; opacity: 0.47;"></ion-icon>
+      <ion-label color="medium" class="ion-padding-end">Título:</ion-label>
+      <ion-input type="string" formControlName="nome"></ion-input>
+    </ion-item>
+    <!--Mensagem de Erro Titulo-->
+    <!-- touched => verifica no q sai do input-->
+    <span style="width: 10%; margin-left: 4%;" *ngIf="formLivro.get('nome')?.touched &&
+    formLivro.get('nome')?.errors?.['required']" color="danger">Título é obrigatório</span><br/>
+    
+    <ion-item color="tertiary" class="ion-align-items-center">
+      <ion-icon name="person-outline" style="margin-right: 5px; opacity: 0.47;"></ion-icon>
+      <ion-label color="medium" class="ion-padding-end">Autor:</ion-label>
+      <ion-input type="string" formControlName="autor"></ion-input>
+    </ion-item>
+    <!--Mensagem de Erro Autor-->
+    <!-- touched => verifica no q sai do input-->
+    <span style="width: 10%; margin-left: 4%;" *ngIf="formLivro.get('autor')?.touched &&
+    formLivro.get('autor')?.errors?.['required']">Autor é obrigatório</span><br/>
+    
+    <ion-item color="tertiary" class="ion-align-items-center">
+      <ion-icon name="business" style="margin-right: 5px; opacity: 0.47;"></ion-icon>
+      <ion-label color="medium" class="ion-padding-end">Editora:</ion-label>
+      <ion-input type="string" formControlName="editora"></ion-input>
+    </ion-item>
+    <!--Mensagem de Erro Editora-->
+    <!-- touched => verifica no q sai do input-->
+    <span style="width: 10%; margin-left: 4%;" *ngIf="formLivro.get('editora')?.touched &&
+    formLivro.get('editora')?.errors?.['required']">Editora é obrigatório</span><br/>
+    
+    <ion-item color="tertiary">
+      <ion-icon name="reorder-four" style="margin-right: 5px; opacity: 0.47;"></ion-icon>
+      <ion-label color="medium">
+        <ion-select label="Gênero:" interface="action-sheet" placeholder="Insira o genero" formControlName="genero">
+          <ion-select-option value="romance">Romance</ion-select-option>
+          <ion-select-option value="terror">Terror</ion-select-option>
+          <ion-select-option value="comedia">Comédia</ion-select-option>
+          <ion-select-option value="drama">Drama</ion-select-option>
+          <ion-select-option value="fantasia">Fantasia</ion-select-option>
+          <ion-select-option value="aventura">Aventura</ion-select-option>
+        </ion-select>
+      </ion-label>
+    </ion-item>
+    <!--Mensagem de Erro Genero-->
+    <!-- touched => verifica no q sai do input-->
+    <span  style="width: 10%; margin-left: 4%;" *ngIf="formLivro.get('genero')?.touched &&
+    formLivro.get('genero')?.errors?.['required']">Gênero é obrigatório</span><br/>
+    
+    <ion-item  color="tertiary" class="ion-align-items-center">
+      <ion-icon name="calendar" style="margin-right: 5px; opacity: 0.47;"></ion-icon>      
+      <ion-label color="medium" class="ion-padding-end inline ion-text-wrap">Data de publicacao:</ion-label>
+      <ion-input type="date" formControlName="anoPublicacao" minlength="4"></ion-input>
+    </ion-item>
+    <!--Mensagem de Erro Ano de publicacao-->
+    <!-- touched => verifica no q sai do input-->
+    <span style="width: 10%; margin-left: 4%;" *ngIf="formLivro.get('anoPublicacao')?.touched &&
+    formLivro.get('anoPublicacao')?.errors?.['required']">Data de Publicacao é obrigatório</span><br/>
+    <!-- <span *ngIf="formLivro.get('anoPublicacao')?.dirty && formLivro.get('anoPublicacao')?.errors?.['pattern']">Ano de Publicação deve ser numérico</span><br>
+    <span *ngIf="formLivro.get('anoPublicacao')?.dirty && formLivro.get('anoPublicacao')?.errors?.['min']">Ano de Publicação deve ser positivo</span><br> -->
+  </ion-list>
+</form>
+

@@ -4,11 +4,11 @@ export default class Livro{
     private _autor: string;
     private _genero: string;
     private _editora: string;
-    private _anoPublicacao: number;
+    private _anoPublicacao: Date;
     private _downloadURL: any;
     private _uid: string;
 
-    constructor(nome: string, autor: string, genero: string, editora: string, anoPublicacao: number){
+    constructor(nome: string, autor: string, genero: string, editora: string, anoPublicacao: Date){
         this._nome = nome;
         this._autor = autor;
         this._genero = genero;
@@ -51,10 +51,10 @@ export default class Livro{
     public set editora(value: string) {
         this._editora = value;
     }
-    public get anoPublicacao(): number {
+    public get anoPublicacao(): Date {
         return this._anoPublicacao;
     }
-    public set anoPublicacao(value: number) {
+    public set anoPublicacao(value: Date) {
         this._anoPublicacao = value;
     }
     public get downloadURL(): any {

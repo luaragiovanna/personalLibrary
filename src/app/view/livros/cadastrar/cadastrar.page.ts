@@ -99,7 +99,7 @@ export class CadastrarPage implements OnInit {
       const {nome, autor, editora, anoPublicacao, genero} = this.formLivro.value;
       if (nome && autor && editora && anoPublicacao && genero) {
         //await this.alertService.simpleLoader();
-        let novo: Livro = new Livro(nome, autor, genero, editora, anoPublicacao);
+        let novo: Livro = new Livro(nome, autor, editora, anoPublicacao, genero);
         novo.uid = this.user.uid;
         if (this.imagem) {
           await this.firebase.uploadImage(this.imagem, novo);

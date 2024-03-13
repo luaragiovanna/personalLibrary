@@ -1,10 +1,11 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import Livro from 'src/app/model/entities/Livro';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
-import { FirebaseService } from 'src/app/model/services/firebase.service';
 import { AlertService } from 'src/app/common/alert.service';
+import Livro from 'src/app/model/entities/Livro';
 import { AuthService } from 'src/app/model/services/auth.service';
+import { FirebaseService } from 'src/app/model/services/firebase.service';
 
 @Component({
   selector: 'app-detalhar',
@@ -19,30 +20,40 @@ export class DetalharPage implements OnInit {
   autor: string;
   genero: string;
   editora: string;
-  anoPublicacao: number;
+  anoPublicacao: Date;
   edicao: boolean = true;
   public imagem : any;
   public user: any;
-
+  public  formLivro: FormGroup;
 
   constructor(private alertController: AlertController, 
     private router: Router, 
     private firebase: FirebaseService,
     private alertService: AlertService,
-    private auth: AuthService) {
+    private auth: AuthService,  private formBuilder: FormBuilder) {
       this.user = this.auth.getUserLogged();
+      
+      this.formLivro = this.formBuilder.group({
+        nome: ['', [Validators.required]],
+        autor: ['', [Validators.required]],
+        genero: ['', [Validators.required]],
+        editora: ['', [Validators.required]],
+        anoPublicacao: ['', [Validators.required]],
+      });
     }
 
   //possibilita carregar todos os dados na tela no q o usuario é redirecionado para essa tela 
   ngOnInit() {
-    this.livro = history.state.livro // pega o objeto
-    this.nome = this.livro.nome;
-    this.autor = this.livro.autor;
-    this.editora = this.livro.editora;
-    this.genero = this.livro.genero;
-    this.anoPublicacao = this.livro.anoPublicacao;
-    console.log(this.livro);
+    this.livro = history.state.livro;
+    this.formLivro.patchValue({
+      nome: this.livro.nome,
+      autor: this.livro.autor,
+      editora: this.livro.editora,
+      genero: this.livro.genero,
+      anoPublicacao: this.livro.anoPublicacao
+    });
   }
+  
 
   habilitar(){ //inverte os true/false
     if(this.edicao){

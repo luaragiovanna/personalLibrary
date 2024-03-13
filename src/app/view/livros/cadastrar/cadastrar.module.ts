@@ -1,11 +1,12 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
 import { CadastrarPageRoutingModule } from './cadastrar-routing.module';
 
+import { ComponentsModule } from 'src/app/components/components.module';
 import { CadastrarPage } from './cadastrar.page';
 
 @NgModule({
@@ -14,7 +15,8 @@ import { CadastrarPage } from './cadastrar.page';
     FormsModule,
     IonicModule,
     CadastrarPageRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule, 
+    ComponentsModule
   ],
   declarations: [CadastrarPage]
 })
