@@ -1,22 +1,33 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <!--botao de voltar-->
+      <!-- Botão de voltar -->
       <ion-back-button color="dark" defaultHref="/"></ion-back-button>
     </ion-buttons>
-    <ion-title>detalhar <ion-icon name="create-outline"></ion-icon></ion-title>
+    <ion-title>Detalhar <ion-icon name="create-outline"></ion-icon></ion-title>
   </ion-toolbar>
 </ion-header>
+
 <ion-content [fullscreen]="true">
-  <ion-toggle (ionChange)="habilitar()" color="dark"> Habilitar edição </ion-toggle>
+  <ion-toggle (ionChange)="habilitar()" color="dark">Habilitar edição</ion-toggle>
+
   <ion-card style="max-width: 80%; margin-left: 9.68%;">
-    <img src="{{livro.downloadURL}}" style="max-width: 100%"/>
+    <img [src]="livro.downloadURL" style="max-width: 100%" *ngIf="livro && livro.downloadURL">
   </ion-card>
-  <app-sections [formLivro]="formLivro"></app-sections>
-  <ion-button disabled="{{edicao}}" expand="block" fill="outline" color="dark">
+  
+
+  <app-sections [formLivro]="formLivro" [edicaoHabilitada]="edicao"></app-sections>
+
+
+  <!-- Botão para alterar imagem -->
+  <ion-button [disabled]="!edicao" expand="block" fill="outline" color="dark">
     <input type="file" (change)="uploadFile($event.target)" class="custom-file-input" />
     Alterar imagem
   </ion-button>
-  <ion-button expand="block" (click)="editar()"  disabled="{{edicao}}" color="dark"> Salvar</ion-button>
-  <ion-button expand="block" (click)="excluir()" fill="solid" color="danger" disabled="{{edicao}}">Excluir</ion-button>
-  </ion-content>
+
+  <!-- Botão para salvar -->
+  <ion-button expand="block" (click)="editar()" [disabled]="!edicao" color="dark">Salvar</ion-button>
+
+  <!-- Botão para excluir -->
+  <ion-button expand="block" (click)="excluir()" fill="solid" color="danger" [disabled]="!edicao">Excluir</ion-button>
+</ion-content>

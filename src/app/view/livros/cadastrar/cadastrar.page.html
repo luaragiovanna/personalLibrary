@@ -9,6 +9,7 @@
 </ion-header>
 
 <ion-content color="tertiary">
+  <ion-toggle (ionChange)="habilitar()" color="dark">Habilitar cadastro</ion-toggle>
   <app-sections [formLivro]="formLivro" (submitForm)="submitForm()"></app-sections>
   <ion-button expand="block" fill="outline" color="dark">
     <input type="file" (change)="uploadFile($event.target)" class="custom-file-input"/>

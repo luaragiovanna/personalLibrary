@@ -21,10 +21,12 @@ export class DetalharPage implements OnInit {
   genero: string;
   editora: string;
   anoPublicacao: Date;
-  edicao: boolean = true;
+  edicao: boolean = false;
   public imagem : any;
   public user: any;
   public  formLivro: FormGroup;
+  edicaoHabilitada: boolean = false;
+
 
   constructor(private alertController: AlertController, 
     private router: Router, 
@@ -44,44 +46,53 @@ export class DetalharPage implements OnInit {
 
   //possibilita carregar todos os dados na tela no q o usuario é redirecionado para essa tela 
   ngOnInit() {
+    this.edicao = false;
     this.livro = history.state.livro;
-    this.formLivro.patchValue({
-      nome: this.livro.nome,
-      autor: this.livro.autor,
-      editora: this.livro.editora,
-      genero: this.livro.genero,
-      anoPublicacao: this.livro.anoPublicacao
-    });
+    if (this.livro) {
+      this.formLivro.patchValue({
+        nome: this.livro.nome,
+        autor: this.livro.autor,
+        editora: this.livro.editora,
+        genero: this.livro.genero,
+        anoPublicacao: this.livro.anoPublicacao
+      });
+    }
+  }
+  
+  
+
+  habilitar() {
+    this.edicao = !this.edicao;
+    
+    if (!this.edicao) {
+      this.formLivro.disable(); // Desativa os campos do formulário
+    } else {
+      this.formLivro.enable(); // Ativa os campos do formulário
+    }
   }
   
 
-  habilitar(){ //inverte os true/false
-    if(this.edicao){
-      this.edicao = false;
-    }else{
-      this.edicao = true;
-    }
-  }
-
   async editar(){
-    if(this.nome && this.autor && this.editora && this.anoPublicacao && this.genero){
+    if(this.formLivro.valid){
       //await this.alertService.simpleLoader();
-      let novo: Livro = new Livro(this.nome, this.autor, this.genero, this.editora, this.anoPublicacao);
+      const { nome, autor, editora, anoPublicacao, genero } = this.formLivro.value;
+      let novo: Livro = new Livro(nome, autor, genero, editora, anoPublicacao);
       novo.id = this.livro.id;
       novo.uid = this.user.uid;
       if(this.imagem){
-        this.firebase.uploadImage(this.imagem,novo);
+        this.firebase.uploadImage(this.imagem, novo);
         await this.alertService.dismissLoader();
-      }else{
+      } else {
         this.firebase.update(novo, this.livro.id); //poderia ser novo.id tambem
       }
       await this.alertService.dismissLoader();
       this.router.navigate(["/home"]);
-    }else{
+    } else {
       await this.alertService.dismissLoader();
       this.presentAlert('ERRO', 'Campos Obrigatórios');
     }
   }
+  
   async presentAlert(subHeader: string, message: string) {
     const alert = await this.alertController.create({
       header: 'Biblioteca Pessoal',
