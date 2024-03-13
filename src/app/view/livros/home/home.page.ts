@@ -28,7 +28,7 @@ export class HomePage {
     this.user = this.auth.getUserLogged();
 
     this.firebase.read(this.user.uid).subscribe(res => {
-      this.lista_livros = res.map(livro => ({
+      this.lista_livros = res.map(livro => ({ //mapea todos os livros pega id e puxa os dados
         id: livro.payload.doc.id,
         ...livro.payload.doc.data() as any
       } as Livro));
@@ -72,7 +72,7 @@ export class HomePage {
           id: livro.payload.doc.id,
           ...livro.payload.doc.data() as any
         } as Livro)).filter(livro =>
-          livro.nome.toLowerCase().includes(query.toLowerCase())
+          livro.nome.toLowerCase().includes(query.toLowerCase()) //nome do livro minusculo e ver se tem nome
         );
         console.log('Livros encontrados:', this.lista_livros);
         this.isLoading = false;

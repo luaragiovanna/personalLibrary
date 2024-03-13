@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertService } from 'src/app/common/alert.service';
 import Livro from 'src/app/model/entities/Livro';
@@ -17,6 +17,11 @@ export class CadastrarPage implements OnInit {
   public user: any;
   formLivro: FormGroup;
   edicao: boolean = false;
+  public nome: string;
+  public autor: string;
+  public genero: string;
+  public editora: string;
+  public anoPublicacao: number;
 
   constructor(private firebase: FirebaseService, 
     private router : Router,
@@ -24,7 +29,15 @@ export class CadastrarPage implements OnInit {
     private alertService : AlertService,
     private formBuilder: FormBuilder,
     private firebaseService: FirebaseService)  {
-  }
+      this.user = this.auth.getUserLogged(); 
+      this.formLivro = new FormGroup({
+        nome: new FormControl,
+        autor: new FormControl,
+        genero: new FormControl,
+        editora: new FormControl,
+        anoPublicacao: new FormControl
+      })
+    }
 
   async cadastrar() {
     try {

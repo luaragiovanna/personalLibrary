@@ -19,7 +19,7 @@ export class SectionsComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (!this.formLivro) {
+    if (!this.formLivro) { //puxa vlidator se formLivro for falso
       this.formLivro = this.formBuilder.group({
         nome: ['', [Validators.required]],
         autor: ['', [Validators.required]],
